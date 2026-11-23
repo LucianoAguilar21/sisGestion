@@ -1,0 +1,28 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<aside class="sidebar">
+
+    <h2>Sistema</h2>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="${pageContext.request.contextPath}/dashboard">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="${pageContext.request.contextPath}/products">
+                    Productos
+                </a>
+            </li>
+
+            <li>
+                <a href="${pageContext.request.contextPath}/users">
+                    Usuarios
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</aside>

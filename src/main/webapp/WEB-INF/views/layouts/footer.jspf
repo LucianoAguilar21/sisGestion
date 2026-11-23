@@ -1,0 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<footer class="footer">
+    <p>Sistema de Gestión © 2026</p>
+</footer>
