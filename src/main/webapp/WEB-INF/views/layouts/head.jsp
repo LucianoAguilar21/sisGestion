@@ -1,10 +1,9 @@
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><c:out value="${pageTitle}"/></title>
+    <title> ${requestScope.pageTitle} | Sistema de Gestión</title>
 
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/css/style.css">

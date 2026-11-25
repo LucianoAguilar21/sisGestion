@@ -6,6 +6,39 @@
          https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd"
          version="6.1">
   <display-name>Archetype Created Web Application</display-name>
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <include-prelude>/WEB-INF/views/layouts/taglibs.jspf</include-prelude>
+    </jsp-property-group>
+
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+
+      <page-encoding>UTF-8</page-encoding>
+
+      <default-content-type>
+        text/html; charset=UTF-8
+      </default-content-type>
+    </jsp-property-group>
+  </jsp-config>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/errors/404.jsp</location>
+  </error-page>
+
+  <error-page>
+    <error-code>403</error-code>
+    <location>/WEB-INF/views/errors/403.jsp</location>
+  </error-page>
+
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/views/errors/500.jsp</location>
+  </error-page>
+
+
 </web-app>
 
 <!--<?xml version="1.0" encoding="UTF-8"?>-->

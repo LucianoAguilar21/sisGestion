@@ -1,5 +1,6 @@
 package models.nullObjects;
 
+import models.Role;
 import models.User;
 
 public class NullUser extends User {
@@ -15,7 +16,7 @@ public class NullUser extends User {
     }
 
     public NullUser()  {
-        super(0, "", "", "", "");
+        super(0, "", "", "", Role.valueOf("user".toUpperCase()));
     }
 
     public boolean isNull() {

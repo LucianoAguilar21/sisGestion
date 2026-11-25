@@ -1,10 +1,7 @@
 package controllers.auth;
 
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
@@ -12,10 +9,27 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
         HttpSession session = req.getSession(false);
+
         if (session != null) {
             session.invalidate();
         }
-        resp.sendRedirect(req.getContextPath());
+
+        Cookie cookie = new Cookie("JSESSIONID", "");
+
+        String contextPath = req.getContextPath();
+
+        cookie.setPath(
+                contextPath.isEmpty() ? "/" : contextPath
+        );
+
+        cookie.setMaxAge(0);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(req.isSecure());
+
+        resp.addCookie(cookie);
+
+        resp.sendRedirect(req.getContextPath() + "/login");
     }
 }

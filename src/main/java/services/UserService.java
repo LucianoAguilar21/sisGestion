@@ -13,11 +13,21 @@ public class UserService {
     }
 
     public User login(String email, String pass) {
-        String emailLower = email.toLowerCase();
-        User usuario = DaoFactory.getUserDao().findByEmail(emailLower);
-        if (usuario.isNull() || !usuario.checkPassword(pass)) {
-            usuario = NullUser.build();
+        if (email == null || pass == null) {
+            return NullUser.build();
         }
+
+        String emailLower = email.trim().toLowerCase();
+
+        User usuario = DaoFactory.getUserDao()
+                .findByEmail(emailLower);
+
+        if (usuario == null || usuario.isNull()
+                || !usuario.checkPassword(pass)) {
+
+            return NullUser.build();
+        }
+
         return usuario;
 
     }

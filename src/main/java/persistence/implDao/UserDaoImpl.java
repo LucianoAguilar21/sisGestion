@@ -1,5 +1,6 @@
 package persistence.implDao;
 
+import models.Role;
 import models.User;
 import models.nullObjects.NullUser;
 import persistence.commons.ConnectionProvider;
@@ -24,7 +25,7 @@ public class UserDaoImpl implements UserDao {
             ResultSet rs = st.executeQuery();
             User u = NullUser.build();
             if (rs.next()) {
-                u = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password_hash"), rs.getString("rol"));
+                u = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password_hash"), Role.valueOf(rs.getString("rol").toUpperCase()));
             }
             return u;
 
@@ -74,7 +75,7 @@ public class UserDaoImpl implements UserDao {
             st.setString(1, user.getName());
             st.setString(2, user.getEmail());
             st.setString(3, user.getPasswordHash());
-            st.setString(4, user.getRol());
+            st.setString(4, user.getRole().getRoleName());
 
             int resultado = 0;
             if(!userExists(user.getEmail())) {

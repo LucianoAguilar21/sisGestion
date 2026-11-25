@@ -26,6 +26,10 @@ public class AuthenticationFilter implements Filter{
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
+        resp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setDateHeader("Expires", 0);
+
         HttpSession session = req.getSession(false);
 
         boolean autenticado = session != null &&

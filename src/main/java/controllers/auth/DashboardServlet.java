@@ -24,8 +24,16 @@ public class DashboardServlet extends HttpServlet {
             return;
         }
 
-        req.getRequestDispatcher(
+        req.setAttribute("pageTitle", "Dashboard");
+
+        req.setAttribute(
+                "contentPage",
                 "/WEB-INF/views/dashboard.jsp"
+        );
+
+
+        req.getRequestDispatcher(
+                "/WEB-INF/views/layouts/main.jsp"
         ).forward(req, resp);
     }
 }

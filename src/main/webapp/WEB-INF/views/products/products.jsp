@@ -1,19 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-</head>
-<body>
- <c:set var="mensaje" value="JSTL funciona correctamente"/>
 
     <p>
         <c:out value="${mensaje}"/>
     </p>
 
 
-         <table border="1" cellpadding="10">
+         <table >
 
                 <tr>
                     <th>ID</th>
@@ -31,5 +22,3 @@
 
             </table>
 
-</body>
-</html>

@@ -26,7 +26,19 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        HttpSession session = req.getSession(false);
+
+        if (session != null && session.getAttribute("user") != null) {
+            resp.sendRedirect(req.getContextPath() + "/dashboard");
+            return;
+        }
+
+        resp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        resp.setHeader("Pragma", "no-cache");
+        resp.setDateHeader("Expires", 0);
+
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+
     }
 
     @Override
@@ -36,15 +48,15 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         try {
-            User user = userService.userExists(email) ? userService.login(email, password) : null;
-
-            if(user != null && !user.isNull() && user.checkPassword(password)) {
+            User user = userService.login(email, password);
+            //System.out.println(user.getPasswordHash());
+            if(user != null && !user.isNull()) {
                 HttpSession session = req.getSession(true);
 
                 req.changeSessionId();
 
                 session.setAttribute("user", user.getName());
-                session.setAttribute("role", user.getRol());
+                session.setAttribute("role", user.getRole().getRoleName());
                 req.setAttribute("pageTitle", "Dashboard");
 
                 System.out.println("Usuario autenticado: " + user.getName() + " (" + user.getEmail() + ")");
@@ -61,25 +73,11 @@ public class LoginServlet extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            req.setAttribute("email", email);
             req.setAttribute("errorMessage", "Ocurrió un error al intentar iniciar sesión. Por favor, inténtalo de nuevo.");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
-//        if(!userService.userExists(email)) {
-//            req.setAttribute("errorMessage", "El usuario no existe.");
-//            req.getRequestDispatcher("index.jsp").forward(req, resp);
-//            return;
-//        }
-//
-//        User user = userService.login(email, password);
-//
-//        if(!user.isNull()){
-//            req.getSession().setAttribute("user", user);
-//            System.out.println("Usuario autenticado: " + user.getName() + " (" + user.getEmail() + ")");
-//            resp.sendRedirect(req.getContextPath() + "/WEB-INF/views/dashboard.jsp"); // Redirect to dashboard
-//        } else {
-//            req.setAttribute("errorMessage", "Credenciales inválidas. Por favor, inténtalo de nuevo.");
-//            req.getRequestDispatcher("index.jsp").forward(req, resp);
-//        }
+
 
     }
 }

@@ -7,36 +7,44 @@ public class User {
     private String name;
     private String email;
     private String passwordHash;
-    private String rol;
+    private Role role;
 
 
-    public User(int id, String name, String email, String passwordHash, String rol) {
+    public User(int id, String name, String email, String passwordHash, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.setPasswordHash(passwordHash);
-        this.rol = rol;
+        this.passwordHash = passwordHash;
+        this.role = role;
     }
 
 
     public boolean checkPassword(String password) {
+        if (password == null || this.passwordHash == null) {
+            return false;
+        }
+
         return BCrypt.checkpw(password, this.passwordHash);
     }
 
-    public String getRol() {
-        return rol;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getPasswordHash() {
         return passwordHash;
     }
 
+    public void setPassword(String password) {
+        this.passwordHash = BCrypt.hashpw(password,  BCrypt.gensalt(12));
+    }
+
     public void setPasswordHash(String passwordHash) {
-        this.passwordHash = BCrypt.hashpw(passwordHash, BCrypt.gensalt(12));
+        this.passwordHash = passwordHash;
     }
 
     public String getEmail() {
@@ -74,7 +82,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
-                ", rol='" + rol + '\'' +
+                ", role='" + role.getRoleName() + '\'' +
                 '}';
     }
 }
